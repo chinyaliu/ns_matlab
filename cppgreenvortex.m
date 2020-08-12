@@ -7,7 +7,7 @@ y = 2*pi*(0:M)/M;
 for i = 1:length(ns)
     a = ns(i).u./ns(1).u;
     sca = sum(a(a>=0&a<=1),'all')./sum(a>0&a<=1,'all');
-    fig1 = figure('position',[100,100,1280,540]);%, 'Visible', 'off');
+    fig1 = figure('position',[100,100,1280,540], 'Visible', 'off');
     subplot('position',[0.08 0.1 0.4 0.8]);
     f1 = ns(i).vort;
     f1 = [f1;f1(1,:)];
@@ -70,17 +70,17 @@ for i = 1:length(ns)
     F(i) = getframe(gcf) ;
 end
 
-% % create the video writer with 1 fps
-% writerObj = VideoWriter('numerical_new.mp4','MPEG-4');
-% writerObj.FrameRate = 20;
-% % set the seconds per image
-% % open the video writer
-% open(writerObj);
-% % write the frames to the video
-% for i=1:length(F)
-%     % convert the image to a frame
-%     frame = F(i) ;    
-%     writeVideo(writerObj, frame);
-% end
-% % close the writer object
-% close(writerObj);
+% create the video writer with 1 fps
+writerObj = VideoWriter('numerical_4k.mp4','MPEG-4');
+writerObj.FrameRate = 20;
+% set the seconds per image
+% open the video writer
+open(writerObj);
+% write the frames to the video
+for i=1:length(F)
+    % convert the image to a frame
+    frame = F(i) ;    
+    writeVideo(writerObj, frame);
+end
+% close the writer object
+close(writerObj);

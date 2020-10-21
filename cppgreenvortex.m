@@ -2,12 +2,12 @@ close all; clear all; clc;
 load('testNS.mat');
 x = 2*pi*(0:N)/N;
 y = 2*pi*(0:M)/M;
-[X,Y] = meshgrid(x,y);
-[X2,Y2] = meshgrid(x(1:end-1),y(1:end-1));
+[X,Y] = meshgrid(y,x);
+[X2,Y2] = meshgrid(y(1:end-1),x(1:end-1));
 for i = 1:length(ns)
+fig1 = figure('position',[100,100,1280,540]);%, 'Visible', 'off');
     a = ns(i).u./ns(1).u;
     sca = sum(a(a>=0&a<=1),'all')./sum(a>0&a<=1,'all');
-    fig1 = figure('position',[100,100,1280,540], 'Visible', 'off');
     subplot('position',[0.08 0.1 0.4 0.8]);
     f1 = ns(i).vort;
     f1 = [f1;f1(1,:)];
@@ -21,10 +21,10 @@ for i = 1:length(ns)
     set(s,'edgecolor','none');
     set(gca,'YDir','normal');
     colorbar;
-    bottom = -2;
-    top = 2;
-    caxis manual
-    caxis([bottom top]);
+%     bottom = -2;
+%     top = 2;
+%     caxis manual
+%     caxis([bottom top]);
     h = colorbar;
     ylabel(h,'\omega_z','fontsize',14,'rotation',0);
     hold on;
@@ -47,10 +47,10 @@ for i = 1:length(ns)
     set(s,'edgecolor','none');
     set(gca,'YDir','normal');
     colorbar;
-    bottom = -0.5;
-    top = 0.5;
-    caxis manual
-    caxis([bottom top]);
+%     bottom = -0.5;
+%     top = 0.5;
+%     caxis manual
+%     caxis([bottom top]);
     h = colorbar;
     ylabel(h,'p','fontsize',14,'rotation',0);
     hold on;
@@ -64,23 +64,23 @@ for i = 1:length(ns)
     set(gca,'XTickLabel',{'0','0.5\pi','\pi','1.5\pi','2\pi'})
     set(gca,'YTickLabel',{'0','0.5\pi','\pi','1.5\pi','2\pi'})
     hold off;
-    tex = sprintf('step = %6.f',ns(i).t/0.01);
+    tex = sprintf('t = %4.0f T0',ns(i).t);
     sgtitle(tex,'fontsize',14');
     
     F(i) = getframe(gcf) ;
 end
 
-% create the video writer with 1 fps
-writerObj = VideoWriter('numerical_4k.mp4','MPEG-4');
-writerObj.FrameRate = 20;
-% set the seconds per image
-% open the video writer
-open(writerObj);
-% write the frames to the video
-for i=1:length(F)
-    % convert the image to a frame
-    frame = F(i) ;    
-    writeVideo(writerObj, frame);
-end
-% close the writer object
-close(writerObj);
+% % create the video writer with 1 fps
+% writerObj = VideoWriter('truncate_1k001.mp4','MPEG-4');
+% writerObj.FrameRate = 30;
+% % set the seconds per image
+% % open the video writer
+% open(writerObj);
+% % write the frames to the video
+% for i=1:length(F)
+%     % convert the image to a frame
+%     frame = F(i) ;    
+%     writeVideo(writerObj, frame);
+% end
+% % close the writer object
+% close(writerObj);
